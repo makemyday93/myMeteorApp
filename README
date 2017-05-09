@@ -1,0 +1,38 @@
+To run this project, please use command 'run'.
+To run the test, please use command 'test'.  
+
+Here in this document, I will justify why myApp satisfies the requirements and other questions that have been mentioned in the email. 
+
+1. Time consumption of this project
+    I am new to Meteor, but I have experiences with Angular and Node.JS. From the first peak, Meteor has some similarities to Angular, such as Templates, databiding, and etc. 
+    My time consumption is as follows:
+    a) Learn by going through Meteor Tutorial: 1 Hr
+    b) Plan, Implement, and Debug project functionalities: 3 Hrs
+    c) Apply Sytle: 1 Hr
+    d) Write Test Sheet: 0.5 Hr
+    For this project, I have approximately 5.5 Hrs time consumption in total. 
+    Hope you can see that I am a faster learner because this is literally my first Meteor project. 
+
+2. How this project satisfies all requirements
+    a) Post a message to the system - without an explicit server side call
+        The way I understand this requirement is that no server side call should handle the message posting. From my understanding of Meteor structure, client side collection operation (insert, remove) will only simulate collection modification, and it would not effect the actual server side. From previous experiences, database modification should be on the server side. However, if I implemented the collection on the server side, it would be impossible to implement without server side calls. Therefore, I have a seperate directory named "collection" for both server side and client side to import. 
+        My post mechanism will insert an random id, message content, and a code as one record into collection. Random Id is used to avoid redundant primary key. The usage of code will be mentioned in the next requirement. 
+        * However, I still don't fully understand the structure. I have done some researches online, and from my understanding, ONLY "client" directory will be accessible from client side, but how would client have access to a remote database on server to actually make change. I will do further researches on this. 
+    b) Delete a message they own from the system, **ONLY** using a server side call
+        As mentioned in the email, avoiding using signup form for user authentication is a bonus. To build a user authentication mechanism will significantly increase the time taken for this project, so I found a way to get around this.
+        The major functionalities for signup would allow users to delete ONLY the messages they OWN. Therefore, if I have other ways to check ownership of a message, signup can be avoided. I have implemented the posting to send a code to the server. This is a code not fetched when the page is loaded. Therefore, this is a code that is only known to the message owner. When user tries to delete a message, he/she would be asked for this code. 
+        * A plain text code is now stored, which is highly insecure. A further design on this would be to use crypotograpy algorithms (such as SHA256) to add secrecy to it and then store. The server does the same thing when user tries to delete (sending a SHA256 encrypted text to server to check). 
+    c) see a list of the messages to the system in order of the date posted
+        This is done on the client side to keep it simple. A rather safer way would be to implement an method on server side to return the data back, so that client would not have direct access to the collection. However, I hava tried to do so, but I did not succeed. 
+
+3. Test
+    The work-flow is explained in the test script. Message posting implemented is on client side binded with click events directly. I need further researches to be able to implement a test on template events. Therefore, for posting process a method on server side is implemented that has exactly same lines, so that posting can be tested as well. 
+    The work-flow of test is as follows: 
+    a) Post Test
+        1) Clear collection
+        2) Post message
+        3) Fetch posted message from collection searching for message content - Check if the code is correct
+    b) Delete Test
+        1) Post two messages using different code
+        2) Delete the one using correct code - fetch collection and there should be 1 remain
+        3) Delete the other using wrong code - fetch collection and there should still be 1 remain because it should fail

@@ -1,0 +1,19 @@
+To-Do:
+a) Post a message to the system - without an explicit server side call'
+	- Assume that explicit server side call --> NO server side call
+	- Client side call only simulates data
+		* Need a sync with server --> Method.call() still required to write to server
+		* Button call client side method, client side method call server side API
+		* Use events --> 'submit .new-task'(event)
+		
+b) Delete a message they own from the system, **ONLY** using a server side call
+	- use a server side call --> Method.call()
+	
+c) see a list of the messages to the system in order of the date posted.
+	- Does not specify user authentication --> everything in database will be displayed --> collection.find();
+	
+d) If you need to create a signup form to do this, then do so - if not, great. 
+	- Avoid signup/login
+		* Try publications and privacy --> this.userId works when no login?
+		* If not, user provides code for authentication --> SHA256, then saved in database when posting)
+	

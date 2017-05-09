@@ -1,0 +1,1 @@
+meteor reset && meteor test --driver-package practicalmeteor:mocha

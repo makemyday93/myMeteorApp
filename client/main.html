@@ -1,0 +1,30 @@
+<body>
+  <div class="container">
+    <header>
+      {{> top}}
+    </header>
+ 
+    <table>
+      <td>Message Id</td>
+      <td>Message Content</td>
+      <td>Actions</td>
+      {{#each tasks}}
+        {{> task}}
+      {{/each}}
+    </table>
+  </div>
+</body>
+ 
+<template name="task">
+  <tr>
+    <td>{{_id}}</td>
+    <td>{{message}}</td>
+    <td><button value="{{_id}}">Remove</button></td>  <!--button value is binded with id; when delete, value of button will be used to keep track of the record-->
+  </tr>
+</template>
+
+<template name='top'>
+  <h1>Shihao_Sun_myApp</h1>
+  <button>Add</button>
+  <hr>
+</template>
